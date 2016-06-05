@@ -1,6 +1,6 @@
 # npm-install-global [![NPM version](https://img.shields.io/npm/v/npm-install-global.svg?style=flat)](https://www.npmjs.com/package/npm-install-global) [![NPM downloads](https://img.shields.io/npm/dm/npm-install-global.svg?style=flat)](https://npmjs.org/package/npm-install-global) [![Build Status](https://img.shields.io/travis/jonschlinkert/npm-install-global.svg?style=flat)](https://travis-ci.org/jonschlinkert/npm-install-global)
 
-Simple API for globally installing a NPM package.
+Simple API for globally installing or uninstalling one or more NPM packages.
 
 ## Install
 
