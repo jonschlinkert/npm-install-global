@@ -12,6 +12,8 @@ function isInstalled(name) {
 }
 
 describe('npm-install-global', function() {
+  this.timeout(20000);
+
   before(function(cb) {
     if (!isInstalled('mocha')) {
       npm.install('mocha', cb);
