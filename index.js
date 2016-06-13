@@ -7,6 +7,9 @@
 
 'use strict';
 
+var path = require('path');
+var gm = require('global-modules');
+var exists = require('fs-exists-sync');
 var spawn = require('cross-spawn');
 
 /**
@@ -63,6 +66,38 @@ npm.install = function(names, cb) {
 };
 
 /**
+ * Install the given packages if they are not already installed.
+ *
+ * ```js
+ * npm.maybeInstall(['foo', 'bar', 'baz'], function(err) {
+ *   if (err) throw err;
+ * });
+ * ```
+ * @param {String|Array} `names` One or more package names.
+ * @param {Function} `cb` Callback
+ * @api public
+ */
+
+npm.maybeInstall = function(names, cb) {
+  if (typeof names === 'string') {
+    names = [names];
+  }
+
+  names = names.filter(function(name) {
+    return !isInstalled(name);
+  });
+
+  if (names.length === 0) {
+    return cb(null, []);
+  }
+
+  npm('install', names, function(err) {
+    if (err) return cb(err);
+    cb(null, names);
+  });
+};
+
+/**
  * Execute `npm uninstall --global` with one or more package `names`.
  *
  * ```js
@@ -78,6 +113,14 @@ npm.install = function(names, cb) {
 npm.uninstall = function(names, cb) {
   npm('uninstall', names, cb);
 };
+
+/**
+ * Returns true if package `name` is already installed globally
+ */
+
+function isInstalled(name) {
+  return exists(path.resolve(gm, name));
+}
 
 /**
  * Expose `npm`
