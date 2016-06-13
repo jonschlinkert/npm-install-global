@@ -1,7 +1,7 @@
 {
   "name": "npm-install-global",
   "description": "Simple API for globally installing or uninstalling one or more NPM packages.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/jonschlinkert/npm-install-global",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/npm-install-global",
