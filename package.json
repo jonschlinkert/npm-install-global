@@ -1,7 +1,7 @@
 {
   "name": "npm-install-global",
   "description": "Simple API for globally installing or uninstalling one or more NPM packages.",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "homepage": "https://github.com/jonschlinkert/npm-install-global",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/npm-install-global",
@@ -20,13 +20,12 @@
     "test": "mocha"
   },
   "dependencies": {
-    "cross-spawn": "^4.0.0",
-    "fs-exists-sync": "^0.1.0",
-    "global-modules": "^0.2.2"
+    "cross-spawn": "^5.1.0",
+    "global-modules": "^0.2.3"
   },
   "devDependencies": {
-    "gulp-format-md": "^0.1.9",
-    "mocha": "^2.5.3"
+    "gulp-format-md": "^0.1.12",
+    "mocha": "^3.3.0"
   },
   "keywords": [
     "cmd",
@@ -56,10 +55,6 @@
         "generate"
       ]
     },
-    "reflinks": [
-      "verb",
-      "verb-readme-generator"
-    ],
     "lint": {
       "reflinks": true
     }
