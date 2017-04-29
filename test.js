@@ -1,14 +1,14 @@
 'use strict';
 
 require('mocha');
+var fs = require('fs');
 var path = require('path');
 var gm = require('global-modules');
-var exists = require('fs-exists-sync');
 var assert = require('assert');
 var npm = require('./');
 
 function isInstalled(name) {
-  return exists(path.resolve(gm, name));
+  return fs.existsSync(path.resolve(gm, name));
 }
 
 describe('npm-install-global', function() {

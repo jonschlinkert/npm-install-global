@@ -1,15 +1,15 @@
 /*!
- * npm-install-global (https://github.com/jonschlinkert/npm-install-global)
+ * npm-install-global <https://github.com/jonschlinkert/npm-install-global>
  *
- * Copyright (c) 2016, Jon Schlinkert.
- * Licensed under the MIT License.
+ * Copyright (c) 2016-2017, Jon Schlinkert.
+ * Released under the MIT License.
  */
 
 'use strict';
 
+var fs = require('fs');
 var path = require('path');
 var gm = require('global-modules');
-var exists = require('fs-exists-sync');
 var spawn = require('cross-spawn');
 
 /**
@@ -40,13 +40,31 @@ function npm(cmd, names, cb) {
     return;
   }
 
-  var args = [cmd, '--global'].concat(names);
+  var args = arrayify(cmd).concat(names);
   spawn('npm', args, {stdio: 'inherit'})
     .on('error', cb)
     .on('close', function(code, err) {
       cb(err, code);
     });
 }
+
+/**
+ * Execute `npm [cmd] --global` with one or more package `names`.
+ *
+ * ```js
+ * npm.global('install', 'generate', function(err) {
+ *   if (err) throw err;
+ * });
+ * ```
+ * @param {String} `cmd` The command to run
+ * @param {String|Array} `names` One or more package names.
+ * @param {Function} `cb` Callback
+ * @api public
+ */
+
+npm.global = function(cmd, names, cb) {
+  npm([cmd, '--global'], names, cb);
+};
 
 /**
  * Execute `npm install --global` with one or more package `names`.
@@ -62,7 +80,7 @@ function npm(cmd, names, cb) {
  */
 
 npm.install = function(names, cb) {
-  npm('install', names, cb);
+  npm.global('install', names, cb);
 };
 
 /**
@@ -91,7 +109,7 @@ npm.maybeInstall = function(names, cb) {
     return cb(null, []);
   }
 
-  npm('install', names, function(err) {
+  npm.global('install', names, function(err) {
     if (err) return cb(err);
     cb(null, names);
   });
@@ -111,7 +129,7 @@ npm.maybeInstall = function(names, cb) {
  */
 
 npm.uninstall = function(names, cb) {
-  npm('uninstall', names, cb);
+  npm.global('uninstall', names, cb);
 };
 
 /**
@@ -119,7 +137,11 @@ npm.uninstall = function(names, cb) {
  */
 
 function isInstalled(name) {
-  return exists(path.resolve(gm, name));
+  return fs.existsSync(path.resolve(gm, name));
+}
+
+function arrayify(val) {
+  return val ? (Array.isArray(val) ? val : [val]) : [];
 }
 
 /**
